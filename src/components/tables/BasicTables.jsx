@@ -7,11 +7,10 @@ import BasicTable from './BasicTable';
 import SelectTable from './SelectTable';
 import SortTable from './SortTable';
 import SearchTable from './SearchTable';
-import BreadcrumbCustom from '../BreadcrumbCustom';
+
 
 const BasicTables = () => (
     <div className="gutter-example">
-        <BreadcrumbCustom first="表格" second="基础表格" />
         <Row gutter={16}>
             <Col className="gutter-row" md={24}>
                 <div className="gutter-box">

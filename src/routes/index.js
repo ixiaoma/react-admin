@@ -44,6 +44,7 @@ export default class CRouter extends Component {
                                             // 去除?的参数
                                             const { params } = props.match;
                                             Object.keys(params).forEach(key => {
+                                                console.log(key)
                                                 params[key] = params[key] && params[key].replace(reg, '');
                                             });
                                             props.match.params = { ...params };

@@ -2130,9 +2130,7 @@ this.tinycolor = tinycolor;
 .header .ant-menu .ant-menu-item:hover {
   color: #ffffff;
 }
-.header__trigger {
-  color: #ffffff;
-}
+
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -2377,6 +2375,9 @@ mark {
 .ant-breadcrumb {
   color: #000000;
   color: rgba(0, 0, 0, 0.45);
+  margin-left: 10px;
+  height: 30px;
+  line-height: 30px
 }
 .ant-breadcrumb a {
   color: rgba(0, 0, 0, 0.45);
@@ -2389,6 +2390,12 @@ mark {
 }
 .ant-breadcrumb-separator {
   color: rgba(0, 0, 0, 0.45);
+}
+.ant-layout-content {
+  height: 100%;
+  margin: 0 10px;
+  overflow-x: hidden;
+  overflow-y: auto
 }
 .ant-btn {
   background-image: none;
@@ -7334,6 +7341,62 @@ li.ant-tree-treenode-disabled > .ant-tree-node-content-wrapper:hover {
   color: #ffffff;
 }
 .header__trigger {
-  color: #ffffff;
+  color: @white;
 }
 
+.ant-menu-root {
+  &.ant-menu-inline, &.ant-menu-vertical {
+      background: @primary-color;
+      border-right: 1px solid @primary-color;
+      color: @white;
+      a {
+          color: @white;
+      }
+      .ant-menu-submenu-selected,  {
+          color: @white;
+      }
+      .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-submenu-active {
+          color: @white;
+      }
+      .ant-menu-submenu-title {
+          .ant-menu-submenu-arrow {
+              &::before, &::after {
+                  background: @white;
+              }
+          }
+          &:hover {
+              color: @white;
+              .ant-menu-submenu-arrow {
+                  &::before, &::after {
+                      background: @white;
+                  }
+              }
+          }
+      }
+      .ant-menu-submenu > .ant-menu {
+          background-color: @primary-color-light;
+      }
+      .ant-menu-item > a:hover {
+          color: @white;
+      }
+  }
+}
+.ant-menu-horizontal {
+  > .ant-menu-item-selected {
+      color: @white;
+  }
+}
+.header {
+  padding: 0;
+  padding-right: 40px;
+  height: 65px;
+  .ant-menu {
+      background: transparent;
+      color: @white;
+      .ant-menu-item {
+          &:hover {
+              color: @white;
+          }
+      }
+  }
+}
