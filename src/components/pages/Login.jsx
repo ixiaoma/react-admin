@@ -1,12 +1,8 @@
-/**
- * Created by hao.cheng on 2017/4/16.
- */
 import React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchData, receiveData } from '@/action';
-// import { PwaInstaller } from '../widget';
 
 const FormItem = Form.Item;
 
@@ -19,11 +15,12 @@ class Login extends React.Component {
         const { auth: nextAuth = {}, history } = this.props;
         // const { history } = this.props;
         if (nextAuth.data && nextAuth.data.uid) { // 判断是否登陆
-            localStorage.setItem('user', JSON.stringify(nextAuth.data));
+            sessionStorage.setItem('user', JSON.stringify(nextAuth.data));
             history.push('/');
         }
     }
     handleSubmit = (e) => {
+        const { history } = this.props;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {

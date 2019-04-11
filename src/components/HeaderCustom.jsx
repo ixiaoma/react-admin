@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Menu, Icon, Layout, Badge, Popover } from 'antd';
+import { Menu, Icon, Layout, Badge, Popover,Avatar } from 'antd';
 import screenfull from 'screenfull';
 import { gitOauthToken, gitOauthInfo } from '../axios';
 import { queryString } from '../utils';
-import avater from '../style/imgs/b1.jpg';
 import SiderCustom from './SiderCustom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -19,14 +18,14 @@ class HeaderCustom extends Component {
     };
     componentDidMount() {
         const QueryString = queryString();
-        const _user = JSON.parse(localStorage.getItem('user')) || '测试';
+        const _user = sessionStorage.getItem('user')
         if (!_user && QueryString.hasOwnProperty('code')) {
             gitOauthToken(QueryString.code).then(res => {
                 gitOauthInfo(res.access_token).then(info => {
                     this.setState({
                         user: info
                     });
-                    localStorage.setItem('user', JSON.stringify(info));
+                    sessionStorage.setItem('user', JSON.stringify(info));
                 });
             });
         } else {
@@ -41,12 +40,8 @@ class HeaderCustom extends Component {
         }
 
     };
-    menuClick = e => {
-        console.log(e);
-        e.key === 'logout' && this.logout();
-    };
     logout = () => {
-        localStorage.removeItem('user');
+        sessionStorage.clear()
         this.props.history.push('/login')
     };
     popoverHide = () => {
@@ -76,9 +71,7 @@ class HeaderCustom extends Component {
                 }
                 <Menu
                     mode="horizontal"
-                    style={{ lineHeight: '64px', float: 'right' }}
-                    onClick={this.menuClick}
-                >
+                    style={{ lineHeight: '64px', float: 'right' }}>
                     <Menu.Item key="full" onClick={this.screenFull} >
                         <Icon type="arrows-alt" onClick={this.screenFull} />
                     </Menu.Item>
@@ -87,10 +80,9 @@ class HeaderCustom extends Component {
                             <Icon type="notification" />
                         </Badge>
                     </Menu.Item>
-                    <SubMenu title={<span className="avatar"><img src={avater} alt="头像" /><i className="on bottom b-white" /></span>}>
-                        <MenuItemGroup title="用户中心">
-                            <Menu.Item key="setting:1">你好 - {this.props.user.userName}</Menu.Item>
-                            <Menu.Item key="setting:2">个人信息</Menu.Item>
+                    <SubMenu title={<Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}>
+                        <MenuItemGroup>
+                            <Menu.Item key="info">个人信息</Menu.Item>
                             <Menu.Item key="logout"><span onClick={this.logout}>退出登录</span></Menu.Item>
                         </MenuItemGroup>
                     </SubMenu>

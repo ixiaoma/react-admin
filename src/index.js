@@ -7,10 +7,9 @@ import reducer from './reducer';
 import { AppContainer } from 'react-hot-loader';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NotFound from './components/pages/NotFound';
-import Login from './components/pages/Login';
+import Login from './pages/Login';
 import App from './App';
 import './style/lib/animate.css';
-// import './style/antd/index.less';
 import './style/index.less';
 
 // redux 注入操作
@@ -22,7 +21,7 @@ ReactDOM.render(
         <Provider store={store}>
             <Router>
                 <Switch>
-                    <Route exact path="/" render={() => <Redirect to="/app/home" push />} />        
+                    <Route exact path="/" render={() => <Redirect to="/login" push />} />        
                     <Route path="/app" component={App} />
                     <Route path="/404" component={NotFound} />
                     <Route path="/login" component={Login} />

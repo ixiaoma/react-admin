@@ -18,7 +18,7 @@ class App extends Component {
     };
     componentWillMount() {
         const { receiveData } = this.props;
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = sessionStorage.getItem('user')
         user && receiveData(user, 'auth');
         this.getClientWidth();
         window.onresize = () => {
