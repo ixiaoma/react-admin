@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { Menu, Icon, Layout, Badge, Popover,Avatar } from 'antd';
 import screenfull from 'screenfull';
-import { gitOauthToken, gitOauthInfo } from '../axios';
-import { queryString } from '../utils';
 import SiderCustom from './SiderCustom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import { PwaInstaller } from './widget';
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -16,29 +13,10 @@ class HeaderCustom extends Component {
         user: '',
         visible: false,
     };
-    componentDidMount() {
-        const QueryString = queryString();
-        const _user = sessionStorage.getItem('user')
-        if (!_user && QueryString.hasOwnProperty('code')) {
-            gitOauthToken(QueryString.code).then(res => {
-                gitOauthInfo(res.access_token).then(info => {
-                    this.setState({
-                        user: info
-                    });
-                    sessionStorage.setItem('user', JSON.stringify(info));
-                });
-            });
-        } else {
-            this.setState({
-                user: _user
-            });
-        }
-    };
     screenFull = () => {
         if (screenfull.enabled) {
             screenfull.request();
         }
-
     };
     logout = () => {
         sessionStorage.clear()
@@ -51,6 +29,12 @@ class HeaderCustom extends Component {
     };
     handleVisibleChange = (visible) => {
         this.setState({ visible });
+    };
+    componentDidMount() {
+        const _user = sessionStorage.getItem('user')
+        this.setState({
+            user: _user
+        })
     };
     render() {
         const { responsive, path } = this.props;

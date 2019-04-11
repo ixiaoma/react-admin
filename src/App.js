@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Routes from './routes';
-// import DocumentTitle from 'react-document-title';
 import SiderCustom from './components/SiderCustom';
 import HeaderCustom from './components/HeaderCustom';
 import BreadcrumbCustom from './components/BreadcrumbCustom';
@@ -16,15 +15,6 @@ class App extends Component {
         collapsed: false,
         title: ''
     };
-    componentWillMount() {
-        const { receiveData } = this.props;
-        const user = sessionStorage.getItem('user')
-        user && receiveData(user, 'auth');
-        this.getClientWidth();
-        window.onresize = () => {
-            this.getClientWidth();
-        }
-    }
     getClientWidth = () => { // 获取当前浏览器宽度并设置responsive管理响应式
         const { receiveData } = this.props;
         const clientWidth = window.innerWidth;
@@ -35,15 +25,18 @@ class App extends Component {
             collapsed: !this.state.collapsed,
         });
     };
-    // _setTitle = ({ title }) => {
-    //     if (this.state.title === title) return;
-    //     this.setState({ title });
-    // }
+    componentWillMount() {
+        const { receiveData } = this.props;
+        const user = sessionStorage.getItem('user')
+        user && receiveData(user, 'auth');
+        this.getClientWidth();
+        window.onresize = () => {
+            this.getClientWidth();
+        }
+    };
     render() {
-        // const { title } = this.state;
         const { auth, responsive } = this.props;
         return (
-            // <DocumentTitle title={title}></DocumentTitle>
                 <Layout>
                     {!responsive.data.isMobile && <SiderCustom collapsed={this.state.collapsed} />}
                     <Layout style={{flexDirection: 'column'}}>
@@ -54,7 +47,6 @@ class App extends Component {
                         </Content>
                     </Layout>
                 </Layout>
-            // </DocumentTitle>
         );
     }
 }

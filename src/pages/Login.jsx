@@ -4,7 +4,6 @@ import { LoginFn } from '../axios'
 import md5 from 'js-md5';
 class Login extends Component{
     handleSubmit = (e) => {
-        const { history } = this.props;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
@@ -13,16 +12,14 @@ class Login extends Component{
                 password: md5(values.password)
             }
             LoginFn(params).then(res=>{
-                sessionStorage.setItem('access_token',res.headers.authorization)
-                sessionStorage.setItem('user', values.username);
-                this.props.history.push('/app/home')
+                if(res.status == 200){
+                    sessionStorage.setItem('access_token',res.headers.authorization)
+                    sessionStorage.setItem('user', values.username);
+                    this.props.history.push('/app/home')
+                }
             })
           }
         });
-    }
-    componentWillMount() {
-        const { history } = this.props;
-            // history.push('/app/home');
     }
     render(){
         const { getFieldDecorator } = this.props.form;
