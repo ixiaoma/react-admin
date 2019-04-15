@@ -52,11 +52,15 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    const { auth = {data: {}}, responsive = {data: {}} } = state.httpData;
+    const { auth = {data: {}}, responsive = {data: {}} } = state.app;
     return {auth, responsive};
 };
-const mapDispatchToProps = dispatch => ({
-    receiveData: bindActionCreators(receiveData, dispatch)
-});
+const mapDispatchToProps = dispatch => {
+    return{
+        receiveData: () => {
+            dispatch(receiveData())
+        }
+    }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -77,7 +77,7 @@ class HeaderCustom extends Component {
 }
 
 const mapStateToProps = state => {
-    const { responsive = {data: {}} } = state.httpData;
+    const { responsive = {data: {}} } = state.app;
     return {responsive};
 };
 

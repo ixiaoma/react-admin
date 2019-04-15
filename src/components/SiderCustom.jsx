@@ -81,7 +81,7 @@ class SiderCustom extends Component {
                 />
                 <style>
                     {`
-                    #nprogress .spinner{
+                    .spinner{
                         left: ${this.state.collapsed ? '70px' : '206px'};
                         right: 0 !important;
                     }
