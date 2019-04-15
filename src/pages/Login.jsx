@@ -5,19 +5,18 @@ import md5 from 'js-md5';
 class Login extends Component{
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async(err, values) => {
           if (!err) {
             let params = {
                 username: values.username,
                 password: md5(values.password)
             }
-            LoginFn(params).then(res=>{
-                if(res.status == 200){
-                    sessionStorage.setItem('access_token',res.headers.authorization)
-                    sessionStorage.setItem('user', values.username);
-                    this.props.history.push('/app/home')
-                }
-            })
+            let res = await LoginFn(params)
+            if(res){
+                sessionStorage.setItem('access_token',res.headers.authorization)
+                sessionStorage.setItem('user', values.username);
+                this.props.history.push('/')
+            }
           }
         });
     }

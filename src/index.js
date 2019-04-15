@@ -14,7 +14,7 @@ ReactDOM.render(
         <Provider store={store}>
             <Router>
                 <Switch>
-                    <Route exact path="/" render={() => <Redirect to="/login" push />} />        
+                    <Route exact path="/" render={() => <Redirect to="/app/home" push />} />        
                     <Route path="/app" component={App} />
                     <Route path="/login" component={Login} />
                 </Switch>

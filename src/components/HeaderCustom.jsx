@@ -37,11 +37,11 @@ class HeaderCustom extends Component {
         })
     };
     render() {
-        const { responsive, path } = this.props;
+        const { isMobile, path } = this.props;
         return (
             <Header className="custom-theme header" >
                 {
-                    responsive.data.isMobile ? (
+                    isMobile ? (
                         <Popover content={<SiderCustom path={path} popoverHide={this.popoverHide} />} trigger="click" placement="bottomLeft" visible={this.state.visible} onVisibleChange={this.handleVisibleChange}>
                             <Icon type="bars" className="header__trigger custom-trigger" />
                         </Popover>
@@ -77,8 +77,7 @@ class HeaderCustom extends Component {
 }
 
 const mapStateToProps = state => {
-    const { responsive = {data: {}} } = state.app;
-    return {responsive};
+    return {isMobile : state.app.isMobile};
 };
 
 export default withRouter(connect(mapStateToProps)(HeaderCustom));

@@ -4,9 +4,8 @@ import SiderCustom from './components/SiderCustom';
 import HeaderCustom from './components/HeaderCustom';
 import BreadcrumbCustom from './components/BreadcrumbCustom';
 import { Layout } from 'antd';
-import { receiveData } from './action';
+import { responClient } from './reducers/app';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 const { Content } = Layout;
 
@@ -16,9 +15,9 @@ class App extends Component {
         title: ''
     };
     getClientWidth = () => { // 获取当前浏览器宽度并设置responsive管理响应式
-        const { receiveData } = this.props;
-        const clientWidth = window.innerWidth;
-        receiveData({isMobile: clientWidth <= 992}, 'responsive');
+        const { responClient } = this.props;
+        const clientWidth = window.innerWidth<= 992;
+        responClient(clientWidth);
     };
     toggle = () => {
         this.setState({
@@ -26,24 +25,21 @@ class App extends Component {
         });
     };
     componentWillMount() {
-        const { receiveData } = this.props;
-        const user = sessionStorage.getItem('user')
-        user && receiveData(user, 'auth');
         this.getClientWidth();
         window.onresize = () => {
             this.getClientWidth();
         }
     };
     render() {
-        const { auth, responsive } = this.props;
+        const { isMobile } = this.props;
         return (
                 <Layout>
-                    {!responsive.data.isMobile && <SiderCustom collapsed={this.state.collapsed} />}
+                    {!isMobile && <SiderCustom collapsed={this.state.collapsed} />}
                     <Layout style={{flexDirection: 'column'}}>
-                        <HeaderCustom toggle={this.toggle} collapsed={this.state.collapsed} user={auth.data || {}} />
+                        <HeaderCustom toggle={this.toggle} collapsed={this.state.collapsed} />
                         <BreadcrumbCustom first="UI" second="图标" />
                         <Content>
-                            <Routes auth={auth} />
+                            <Routes/>
                         </Content>
                     </Layout>
                 </Layout>
@@ -52,13 +48,14 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    const { auth = {data: {}}, responsive = {data: {}} } = state.app;
-    return {auth, responsive};
+    return {
+        isMobile:state.app.isMobile
+    }
 };
 const mapDispatchToProps = dispatch => {
     return{
-        receiveData: () => {
-            dispatch(receiveData())
+        responClient: isMobile => {
+            dispatch(responClient(isMobile))
         }
     }
 };

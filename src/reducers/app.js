@@ -1,23 +1,22 @@
 //action types
-export const REQUEST_DATA = 'REQUEST_DATA';
-export const RECEIVE_DATA = 'RECEIVE_DATA';
+export const IS_MOBILE = 'IS_MOBILE';
 
 //reducer
 export default function (state, action) {
     if (!state) {
         state = {
-            data:{},
+            isMobile:false
         }
     }
     switch (action.type) {
-        case REQUEST_DATA:
-            return { ...state, spinLoading: action.spinLoading }
+        case IS_MOBILE:
+            return { ...state,isMobile:action.isMobile}
         default:
             return state
     }
 }
 
 // action creators
-export const httpData = () => {
-    return { type: REQUEST_DATA}
+export const responClient = (isMobileBoolen) => {//响应式
+    return { type: IS_MOBILE,isMobile:isMobileBoolen}
 }
